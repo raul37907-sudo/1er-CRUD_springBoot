@@ -1,0 +1,48 @@
+/* Tabla */
+#usuariosContainer table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+th, td {
+    border: 2px solid #222;
+    padding: 10px;
+    text-align: center;
+}
+th {
+    background-color: #28a745;
+    color: #fff;
+}
+
+/* Bloque de usuario (correo + logout) */
+.user-profile-container {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+.user-mail {
+    font-size: 13px;
+    color: #333;
+}
+
+/* Botones */
+.btn {
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+.btn:hover {
+    opacity: 0.85;
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+}
+.btn-edit { background-color: #007BFF; }
+.btn-delete { background-color: #DC3545; }
+.btn-create { background-color: #28A745; }
+.btn-logout { background-color: #6C757D; }
