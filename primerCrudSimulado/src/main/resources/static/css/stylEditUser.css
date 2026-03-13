@@ -1,0 +1,96 @@
+   :root{
+     --sky-1: #007BFF; /* azul claro*/
+     --sky-2: #6C757D;
+     --card-bg: #FFF59D; /* azul claro*/
+     --accent-green: #FFF9C4; /* Amarillo claro cálido*/
+     --accent-green-2: #bff0a6;
+     --muted: #475569;
+     --text-dark: #071133;
+     --glass-blur: 6px;
+   }
+
+   /* Fondo cielo */
+   html, body {
+     height: 100%;
+     margin: 10;
+     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+     background: linear-gradient(180deg, var(--sky-1), var(--sky-2));
+     color: var(--text-dark);
+   }
+
+   /* Contenedor centrado */
+   .page-wrapper {
+     min-height: 60%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 28px 12px;
+   }
+
+   /* Card */
+   .card {
+     width: 100%;
+     max-width: 320px; /* ajustable */
+     background: var(--card-bg);
+     border-radius: 12px;
+     padding: 18px;
+     box-shadow: 0 10px 24px rgba(7,17,51,0.06);
+     border: 3px solid rgba(7,17,51,0.04);
+   }
+
+   /* Form vertical y compacta */
+   form {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+   }
+
+   /* Etiqueta */
+   label {
+     font-size: 0.98rem;
+     color: var(--muted);
+     margin-bottom: 6px;
+     font-weight: 300;
+   }
+
+   /* Inputs compactos: solo muestran datos */
+   input[type="text"],
+   input[type="number"],
+   input[type="email"] {
+     padding: 6px 8px;
+     height: 20px;
+     border-radius: 12px;
+     border: 1px solid rgba(7,17,51,0.08);
+     background: #fff;
+     font-size: 0.92rem;
+     box-sizing: border-box;
+   }
+
+   /* Si quieres aún más "solo texto" visual, usa este estilo (opcional):*/
+   input.readonly-like {
+     border: none;
+     background: transparent;
+     padding: 4px 6px;
+   }
+
+
+   /* Botones*/
+   .actions { display:flex; gap:10px; justify-content:center; margin-top:8px; }
+   .btn { padding:8px 12px; border-radius:8px; font-weight:700; cursor:pointer; border:none; }
+   .btn-update {
+     background: linear-gradient(180deg, var(--accent-green), var(--accent-green-2));
+     color: #071133; /* texto oscuro */
+     box-shadow: 0 8px 18px rgba(34,139,34,0.06);
+   }
+  .btn:hover {
+       opacity: 0.65;
+       transform: scale(1.15);
+       transition: all 0.2s ease-in-out;
+   }
+
+  .btn-cancel { background-color: #007BFF; }
+ .btn-update { background-color: #007BFF; }
+
+
+
+
