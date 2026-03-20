@@ -1,8 +1,10 @@
 package com.raul.crud.backFront.userServiceImpl;
 
+import com.raul.crud.backFront.persistencia.RolEntity;
 import com.raul.crud.backFront.userDto.UserDto;
 import com.raul.crud.backFront.persistencia.UserEntity;
-import com.raul.crud.backFront.persistencia.UserRepository;
+import com.raul.crud.backFront.userService.RolRepository;
+import com.raul.crud.backFront.userService.UserRepository;
 import com.raul.crud.backFront.userService.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
@@ -16,18 +18,35 @@ se genera  la onotación indoicando que sera un  servicio
 @Service
 public class ServiceUserImpl implements UserService {
     private final UserRepository userRepository;
+    private final RolRepository rolRepository;
 
-    public ServiceUserImpl(UserRepository userRepository) {
+    public ServiceUserImpl(UserRepository userRepository, RolRepository rolRepository) {
         this.userRepository = userRepository;
+        this.rolRepository = rolRepository;
     }
 
    
 
     @Override
     public boolean newUser(@Valid UserDto newUser) {
+
+        System.out.println("++++++++++++++++++++++++++++ ya  para  guardar  a la  base  de datos " +  newUser);
+
+
         if (userRepository.findByMail(newUser.getMail()) != null) return false;
-        UserEntity entity = mapToEntity(newUser);
-        userRepository.save(entity);
+        UserEntity entity = new UserEntity();
+        entity.setMail(newUser.getMail());
+        entity.setNombre(newUser.getNombre());
+        entity.setPaterno(newUser.getPaterno());
+        entity.setMaterno(newUser.getMaterno());
+        entity.setEdad(newUser.getEdad());
+        // de esta  manera  lo  guardamos  para  matenener l a relacion   de userentity  en  privat e RolEntity rol
+
+        RolEntity rol = rolRepository.findById(newUser.getIdRolDto())
+                .orElseThrow(() -> new IllegalArgumentException("Rol no encontrado"));
+        entity.setRol(rol);
+
+        userRepository.save(entity); // ✅ ahora sí guardas la entidad
         return true;
     }
 
@@ -44,7 +63,15 @@ public class ServiceUserImpl implements UserService {
         existente.setEdad(usuario.getEdad());
         existente.setMaterno(usuario.getMaterno());
         existente.setPaterno(usuario.getPaterno());
-        existente.setRol(usuario.getRol());
+        // existente.setRol(usuario.getRol()); ya  biene  de una  tabl a doirecto
+
+        // ✅ convertir el id del rol en RolEntity
+        RolEntity rol = rolRepository.findById(usuario.getIdRolDto())
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+        existente.setRol(rol);
+
+        //existente.setRol(String.valueOf(rol));
+        //rol  es una  entidad,  casteamso para que sea string
 
         userRepository.save(existente); // ✅ ahora sí guardas la entidad
         return true;
@@ -53,16 +80,19 @@ public class ServiceUserImpl implements UserService {
     @Override
     public Optional<UserDto> findById(Long id) {
         return userRepository.findById(id)
-                .map(entity -> new UserDto(
-                        entity.getId(),
-                        entity.getNombre(),
-                        entity.getPaterno(),
-                        entity.getMaterno(),
-                        entity.getEdad(),
-                        entity.getMail(),
-                        entity.getRol()
-                ));
-    }//
+                .map(entity -> {
+                    UserDto dto = new UserDto();
+                    dto.setId(entity.getId());
+                    dto.setNombre(entity.getNombre());
+                    dto.setPaterno(entity.getPaterno());
+                    dto.setMaterno(entity.getMaterno());
+                    dto.setEdad(entity.getEdad());
+                    dto.setMail(entity.getMail());
+                    dto.setIdRolDto(entity.getRol().getId_rol());
+                    dto.setNomRol(entity.getRol().getRol());
+                    return dto;
+                });
+    }
 
 
 
@@ -90,17 +120,21 @@ public class ServiceUserImpl implements UserService {
     public List<UserDto> listarAll() {
         return userRepository.findAll()
                 .stream()
-                .map(entity -> new UserDto(
-                        entity.getId(),
-                        entity.getNombre(),
-                        entity.getPaterno(),
-                        entity.getMaterno(),
-                        entity.getEdad(),
-                        entity.getMail(),
-                        entity.getRol()
-                ))
+                .map(entity -> {
+                    UserDto dto = new UserDto();
+                    dto.setId(entity.getId());
+                    dto.setNombre(entity.getNombre());
+                    dto.setPaterno(entity.getPaterno());
+                    dto.setMaterno(entity.getMaterno());
+                    dto.setEdad(entity.getEdad());
+                    dto.setMail(entity.getMail());
+                    dto.setIdRolDto(entity.getRol().getId_rol());     // ✅ id del rol
+                    dto.setNomRol(entity.getRol().getRol());   // ✅ nombre del rol
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
+
 
     private UserEntity mapToEntity(UserDto dto) {
         UserEntity e = new UserEntity();
@@ -109,7 +143,14 @@ public class ServiceUserImpl implements UserService {
         e.setMaterno(dto.getMaterno());
         e.setEdad(dto.getEdad());
         e.setMail(dto.getMail());
-        e.setRol(dto.getRol());
+        // rol  ya es entidad e.setRol(dto.getRol());
+        // ✅ convertir el id del rol en RolEntity
+        RolEntity rol = rolRepository.findById(dto.getId())
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+
+        e.setRol(rol);
+        // rol es una entidad y  necesitamos  mandar  un string  , solo  casteamos
+
         return e;
     }
 }

@@ -1,11 +1,7 @@
 package com.raul.crud.backFront.persistencia;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.Data;
 
 /*
@@ -14,12 +10,8 @@ import lombok.Data;
  la cual  representara la tabla en la BD
  */
 
-
-
-
 @Entity
 @Table(name = "usuarios")
-
 @Data
 public class  UserEntity { // es la persistencia
 
@@ -28,19 +20,22 @@ public class  UserEntity { // es la persistencia
     private Long id;
 
     @SuppressWarnings("unused")
-	private String nombre;
-    @SuppressWarnings("unused")
-	private String paterno;
-    @SuppressWarnings("unused")
-	private String materno ;
-    @SuppressWarnings("unused")
+	private String nombre;    @SuppressWarnings("unused")
+	private String paterno;    @SuppressWarnings("unused")
+	private String materno ;    @SuppressWarnings("unused")
 	private int edad;
 
-	private String rol;  // asi  se llama la  columna de l a tabla  usuarios
+    //relacion  conrol 👉 Con esto, la relación queda bidireccional:
+    //Desde un Usuario puedes acceder a su Rol.
+    //Desde un Rol puedes acceder a todos los Usuarios que lo tienen.
+    @ManyToOne
+    @JoinColumn(name = "rol", referencedColumnName = "id_rol", nullable = false)
+    // name -> nombre  de la columna --  referencedColumnName columna  a la que referencía
+   // @JsonBackReference
+    private RolEntity  rol;  // asi  se llama la  columna de l a tabla  usuarios
 
     @Column(unique = true)
     private String mail;
-
 
 
 

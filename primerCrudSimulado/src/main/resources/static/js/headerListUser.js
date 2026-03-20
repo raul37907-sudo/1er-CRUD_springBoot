@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${u.materno ? u.materno.trim() : ''}</td>
                 <td>${u.edad || ''}</td>
                 <td>${u.mail || ''}</td>
-                <td>${u.rol || ''}</td>
+                <td>${u.nomRol ? u.nomRol.trim() : ''}</td>
                 <td>
                     <button class="btn btn-edit" onclick="location.href='/usuarios/editar/${u.id}'">Editar</button>
                     <button class="btn btn-delete" onclick="eliminarUsuario('${u.mail}')">Eliminar</button>

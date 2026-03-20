@@ -1,0 +1,96 @@
+/* Fondo general de la página */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff6f61, #6a82fb); /* degradado rosa–morado */
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor del formulario */
+form {
+    background: #4a90e2; /* azul cálido */
+    color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    width: 300px;
+    text-align: center;
+}
+
+/* Título dentro del formulario */
+form h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #fff;
+}
+
+/* Etiquetas y campos */
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: left;
+    font-size: 13px;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Botones llamativos */
+button {
+    width: 48%;
+    padding: 10px;
+    margin: 10px 1%;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Botón Guardar */
+button[type="submit"] {
+    background-color: #27ae60;
+    color: #fff;
+}
+
+button[type="submit"]:hover {
+    background-color: #1e8449;
+    transform: scale(1.08);
+}
+
+/* Botón Cancelar */
+button[type="button"] {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+button[type="button"]:hover {
+    background-color: #c0392b;
+    transform: scale(1.08);
+}
+
+/* Mensajes */
+#mensajeRegistro {
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+#mensajeRegistro .error {
+    color: #ffdddd;
+    font-weight: bold;
+}
+
+#mensajeRegistro .success {
+    color: #d4f7d4;
+    font-weight: bold;
+}

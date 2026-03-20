@@ -1,9 +1,12 @@
 package com.raul.crud.backFront.userDto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.raul.crud.backFront.persistencia.RolEntity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 @Data   
 public class UserDto {
@@ -21,34 +24,23 @@ public class UserDto {
     private String materno;
     @Min(value = 18,  message = "Debes de ser mayor de edad ")
     private int edad;
+
     @Email(message = "el e-mail  debe  de tener  un formato  valido")
     @NotBlank(message = "el correo  no puede estas en  blanco")
     private String mail;
-	private String rol;
+
+
+	@NotNull
+	//@JsonProperty("id_rol")   // opcional: mantiene el nombre id_rol que llega  en  le   JSON
+    // se utiliza en  caso  de qu e la  variable de esta clase tenga otro  nombre y
+	private Long idRolDto;
+	private  String nomRol;
 
 
 
 
-		// ✅ Constructor vacío (necesario para frameworks como Jackson)
-		public UserDto() {}
 
-		// ✅ Constructor completo y  debe  de coincidir  con el ,map de la implementacion
-		public UserDto(Long id, String nombre ,String paterno,String materno,int edad,String mail,String rol) {
-			this.id = id;
-			this.nombre = nombre;
-			this.paterno = paterno;
-			this.materno = materno;
-			this.edad = edad;
-			this.mail = mail;
-			this.rol = rol;
-		}
 
-		// ✅ Constructor parcial (solo id, mail y rol)
-		public UserDto(Long id, String mail, String rol) {
-			this.id = id;
-			this.mail = mail;
-			this.rol = rol;
-		}
 
 
 
